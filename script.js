@@ -9,6 +9,29 @@ function getHumanChoice() {
   return choice.toLowerCase();
 }
 
+const TRASH_TALK = {
+  human: [
+    "Beginner's luck. Several times in a row.",
+    "The computer did not see that coming. Neither did it see anything coming, it's a computer.",
+    "A proud moment. Write it down somewhere, it may not happen again.",
+  ],
+  computer: [
+    "The machine remains undefeated by feelings.",
+    "That one stung. Shake it off.",
+    "The computer does not gloat. It does not need to.",
+  ],
+  tie: [
+    "A stalemate. Riveting stuff.",
+    "Nobody wins. Everybody goes home vaguely disappointed.",
+    "Great minds think alike, apparently.",
+  ],
+};
+
+function getTrashTalk(outcome) {
+  const lines = TRASH_TALK[outcome];
+  return lines[Math.floor(Math.random() * lines.length)];
+}
+
 const VALID_ROUND_OPTIONS = [1, 3, 5, 7, 9];
 
 function getRoundsToPlay() {
@@ -33,6 +56,7 @@ function playGame() {
 
     if (humanChoice === computerChoice) {
       console.log(`Tie! Both chose ${humanChoice}.`);
+      console.log(getTrashTalk("tie"));
       history.push({ humanChoice, computerChoice, outcome: "tie" });
       return;
     }
@@ -46,10 +70,12 @@ function playGame() {
     if (beats[humanChoice] === computerChoice) {
       humanScore++;
       console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+      console.log(getTrashTalk("human"));
       history.push({ humanChoice, computerChoice, outcome: "human" });
     } else {
       computerScore++;
       console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+      console.log(getTrashTalk("computer"));
       history.push({ humanChoice, computerChoice, outcome: "computer" });
     }
   }

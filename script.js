@@ -25,6 +25,7 @@ function playGame() {
 
   const totalRounds = getRoundsToPlay();
   const roundsToWin = Math.ceil(totalRounds / 2);
+  const history = [];
 
   function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
@@ -32,6 +33,7 @@ function playGame() {
 
     if (humanChoice === computerChoice) {
       console.log(`Tie! Both chose ${humanChoice}.`);
+      history.push({ humanChoice, computerChoice, outcome: "tie" });
       return;
     }
 
@@ -44,9 +46,11 @@ function playGame() {
     if (beats[humanChoice] === computerChoice) {
       humanScore++;
       console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+      history.push({ humanChoice, computerChoice, outcome: "human" });
     } else {
       computerScore++;
       console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+      history.push({ humanChoice, computerChoice, outcome: "computer" });
     }
   }
 
@@ -60,6 +64,13 @@ function playGame() {
       break;
     }
   }
+
+  console.log("Round recap:");
+  history.forEach((entry, index) => {
+    const resultLabel =
+      entry.outcome === "tie" ? "Tie" : entry.outcome === "human" ? "You won" : "Computer won";
+    console.log(`  Round ${index + 1}: ${entry.humanChoice} vs ${entry.computerChoice}. ${resultLabel}.`);
+  });
 
   console.log(`Final score. You: ${humanScore}, Computer: ${computerScore}`);
   if (humanScore > computerScore) {

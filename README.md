@@ -9,3 +9,5 @@ Console-only version per the lesson spec — no DOM/UI yet, that's a later lesso
 - **Trash talk** — a few randomised lines per outcome (win/lose/tie), so it doesn't say the same thing twice in a row
 
 Open `index.html` in a browser and play via the console — `getHumanChoice()` and `getRoundsToPlay()` both use `prompt()`.
+
+Live: [gtdae.github.io/rock-paper-scissors](https://gtdae.github.io/rock-paper-scissors/)

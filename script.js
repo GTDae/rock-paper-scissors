@@ -9,9 +9,22 @@ function getHumanChoice() {
   return choice.toLowerCase();
 }
 
+const VALID_ROUND_OPTIONS = [1, 3, 5, 7, 9];
+
+function getRoundsToPlay() {
+  let rounds;
+  do {
+    rounds = parseInt(prompt("Best of how many rounds? Choose 1, 3, 5, 7, or 9:"));
+  } while (!VALID_ROUND_OPTIONS.includes(rounds));
+  return rounds;
+}
+
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
+
+  const totalRounds = getRoundsToPlay();
+  const roundsToWin = Math.ceil(totalRounds / 2);
 
   function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
@@ -37,14 +50,18 @@ function playGame() {
     }
   }
 
-  for (let round = 1; round <= 5; round++) {
+  for (let round = 1; round <= totalRounds; round++) {
     const humanSelection = getHumanChoice();
     const computerSelection = getComputerChoice();
     console.log(`Round ${round}:`);
     playRound(humanSelection, computerSelection);
+
+    if (humanScore === roundsToWin || computerScore === roundsToWin) {
+      break;
+    }
   }
 
-  console.log(`Final score — You: ${humanScore}, Computer: ${computerScore}`);
+  console.log(`Final score. You: ${humanScore}, Computer: ${computerScore}`);
   if (humanScore > computerScore) {
     console.log("You win the game!");
   } else if (computerScore > humanScore) {
